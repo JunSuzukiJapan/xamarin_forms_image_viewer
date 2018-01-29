@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ImageViewer"
+    x:Class="ImageViewer.MainPage">
+
+    <StackLayout>
+        <StackLayout.Margin>
+            <!-- iOSはトップに 20 の余白が必要 -->
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="iOS">0, 20, 0, 0</On>
+                <On Platform="Android">0, 0, 0, 0</On>
+            </OnPlatform>
+        </StackLayout.Margin>
+
+        <Label Text="Image Viewer" VerticalOptions="Center" HorizontalOptions="Center" />
+        <Button Text="Select Image" Command="{Binding SelectImageCommand}" />
+        <Image Source="{Binding ImageSource}" />
+    </StackLayout>
+</ContentPage>
