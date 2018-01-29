@@ -15,13 +15,8 @@ namespace ImageViewer.iOS.Services {
 
         public override void ViewDidLoad() {
             base.ViewDidLoad();
-            View.BackgroundColor = UIColor.White;
-            var closeButtonItem = new UIBarButtonItem("Close", UIBarButtonItemStyle.Plain, this, null);
-            this.NavigationItem.LeftBarButtonItem = closeButtonItem;
-
             // set our source to the photo library
             this.SourceType = UIImagePickerControllerSourceType.PhotoLibrary;
-
             // set what media types
             this.MediaTypes = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary);
 
@@ -91,16 +86,7 @@ namespace ImageViewer.iOS.Services {
             }
 
             if (image != null) {
-                //取得した画像をバイト配列にコピーして別ストリームで読み直す
-                byte[] byteArray = null;
-                using (Stream imageStream = image.AsPNG().AsStream()) {
-                    imageStream.Position = 0;
-                    using (MemoryStream ms = new MemoryStream()) {
-                        imageStream.CopyTo(ms);
-                        byteArray = ms.ToArray();
-                    }
-                }
-                var imageSource = ImageSource.FromStream(() => new MemoryStream(byteArray));
+                var imageSource = ImageSource.FromStream(() => image.AsPNG().AsStream());
                 if (this.mImageSelectedHander != null) {
                     this.mImageSelectedHander(imageSource);
                 }
